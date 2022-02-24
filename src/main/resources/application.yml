@@ -1,0 +1,52 @@
+# Propriedades da aplicacao Spring Boot
+spring:
+  main:
+    banner-mode: console
+  application:
+    name: dev-rabbitmq
+
+# Configuracao do Spring Doc
+springdoc:
+  packagesToScan: br.com.nagata.dev.controller
+  pathsToMatch: /api/v1/operation/**
+  api-docs:
+    path: /operation-docs
+
+# Dados exibidos no endpoint "info" do Actuator
+info:
+  app:
+    groupId: "@project.groupId@"
+    artifactId: "@project.artifactId@"
+    version: "@project.version@"
+    java.version: "@java.version@"
+    
+# Configuracao da aplicacao
+application:
+  backing-services:
+    jms:
+      hostname: localhost
+      virtual-host: /
+      port: 5672
+      username: nagata
+      password: nagata
+      threads: 1
+      queue: DEV.L.CUSTOMER
+
+# Server
+server:
+  port: 8080
+  servlet:
+    context-path: /dev-rabbitmq
+
+# Configuracao do Actuator
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  info:
+    env:
+      enabled: true
