@@ -8,7 +8,7 @@ $ git clone https://github.com/tiagomassashi/dev-rabbitmq.git
 
 
 ```yaml
-# Configuração docker RabbitMQ
+# Configuração RabbitMQ docker-compose.yml
 services:
  rabbitmq:
     image: rabbitmq:3-management
