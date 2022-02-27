@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.util.backoff.FixedBackOff;
 import br.com.nagata.dev.client.OperationListener;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,6 +21,8 @@ import lombok.Setter;
 @ConfigurationProperties(prefix = "application.backing-services.jms")
 public class JmsConfig {
 
+  private static final int INTERVAL_ATTEMPTS = 5000;
+  private static final int MAX_ATTEMPTS = 1;
   private String hostname;
   private String virtualHost;
   private int port;
@@ -58,6 +61,7 @@ public class JmsConfig {
     container.setMessageListener(listener);
     container.setAcknowledgeMode(AcknowledgeMode.AUTO);
     container.setAutoStartup(true);
+    container.setRecoveryBackOff(new FixedBackOff(INTERVAL_ATTEMPTS, MAX_ATTEMPTS));
 
     return container;
   }
